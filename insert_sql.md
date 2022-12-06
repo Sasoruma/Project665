@@ -7,28 +7,12 @@ using System.Configuration;
 using System.Data.SQLite;
 using WindowsFormsApp5.Model;
 
+//Here we have the insert to populate all tables.
+
 namespace WindowsFormsApp5.Action
 {
-    public class ActionLogic
-    {
-        private static string Default = ConfigurationManager.ConnectionStrings["Default"].ConnectionString;
-        private static ActionLogic _instancia = null;
-        public ActionLogic()
-        {
-
-        }
-        public static ActionLogic Instancia
-        {
-            get
-            {
-                if (_instancia == null)
-                {
-                    _instancia = new ActionLogic();
-                }
-                return _instancia;
-            }
-        }
-        public bool Save(ActionModel obj)
+        //Populate Table Action
+        public bool Insert_Action(ActionModel obj)
         {
             bool answer = true;
             using (SQLiteConnection connection = new SQLiteConnection(Default))
@@ -48,18 +32,41 @@ namespace WindowsFormsApp5.Action
             }
             return answer;
         }
-
-        public bool Update(ActionModel obj)
+        //Populate Table Book
+         public bool Insert_Book(BookModel obj)
         {
             bool answer = true;
             using (SQLiteConnection connection = new SQLiteConnection(Default))
             {
                 connection.Open();
-                string query = "update ActionModel set Customerid = @Customerid, Productid = @Productid, Product = @Product, CardN = @CardN";
+                string query = "insert into ActionModel (ISBN, Productid, Title, Author, Year) values (@ISBN, @Productid, @title, @author, @year)";
+                SQLiteCommand cmd = new SQLiteCommand(query, connection);
+                cmd.Parameters.Add(new SQLiteParameter("@ISBN", obj.ISBN));
+                cmd.Parameters.Add(new SQLiteParameter("@Productid", obj.Productid));
+                cmd.Parameters.Add(new SQLiteParameter("@title", obj.title));
+                cmd.Parameters.Add(new SQLiteParameter("@author", obj.author));
+                cmd.Parameters.Add(new SQLiteParameter("@year", obj.year));
+                cmd.CommandType = System.Data.CommandType.Text;
+                if (cmd.ExecuteNonQuery() < 1)
+                {
+                    answer = false;
+                }
+            }
+            return answer;
+        } 
+        //Populate Table Customer
+        public bool Insert_Customer(CustomerModel obj)
+        {
+            bool answer = true;
+            using (SQLiteConnection connection = new SQLiteConnection(Default))
+            {
+                connection.Open();
+                string query = "insert into ActionModel (Customerid, FirstName, LastName, Phone, CardN) values (@Customerid, @FirstName, @LastName, @Phone, @CardN)";
                 SQLiteCommand cmd = new SQLiteCommand(query, connection);
                 cmd.Parameters.Add(new SQLiteParameter("@Customerid", obj.Customerid));
-                cmd.Parameters.Add(new SQLiteParameter("@Productid", obj.Productid));
-                cmd.Parameters.Add(new SQLiteParameter("@Product", obj.Product));
+                cmd.Parameters.Add(new SQLiteParameter("@FirstName", obj.FirstName));
+                cmd.Parameters.Add(new SQLiteParameter("@LastName", obj.LastName));
+                cmd.Parameters.Add(new SQLiteParameter("@Phone", obj.Phone));
                 cmd.Parameters.Add(new SQLiteParameter("@CardN", obj.CardN));
                 cmd.CommandType = System.Data.CommandType.Text;
                 if (cmd.ExecuteNonQuery() < 1)
@@ -68,17 +75,20 @@ namespace WindowsFormsApp5.Action
                 }
             }
             return answer;
-        }
-
-        public bool Delete(ActionModel obj)
+        } 
+        //Populate Table Video
+        public bool Insert_Video(ActionModel obj)
         {
             bool answer = true;
             using (SQLiteConnection connection = new SQLiteConnection(Default))
             {
                 connection.Open();
-                string query = "delete from ActionModel where Customerid = @Customerid";
+                string query = "insert into ActionModel (Productid, Title, StarName, Year) values (@Productid, @Title, @StarName, @Year)";
                 SQLiteCommand cmd = new SQLiteCommand(query, connection);
-                cmd.Parameters.Add(new SQLiteParameter("@Customerid", obj.Customerid));
+                cmd.Parameters.Add(new SQLiteParameter("@Productid", obj.Productid));
+                cmd.Parameters.Add(new SQLiteParameter("@Title", obj.Title));
+                cmd.Parameters.Add(new SQLiteParameter("@StarName", obj.StarName));
+                cmd.Parameters.Add(new SQLiteParameter("@Year", obj.Year));
                 cmd.CommandType = System.Data.CommandType.Text;
                 if (cmd.ExecuteNonQuery() < 1)
                 {
@@ -86,34 +96,6 @@ namespace WindowsFormsApp5.Action
                 }
             }
             return answer;
-        }
-
-
-        public List<ActionModel> Listar()
-        {
-            List<ActionModel> oLista = new List<ActionModel>();
-            using (SQLiteConnection connection = new SQLiteConnection(Default))
-            {
-                connection.Open();
-                string query = "select * from ActionModel";
-                SQLiteCommand cmd = new SQLiteCommand(query, connection);
-                cmd.CommandType = System.Data.CommandType.Text;
-                using (SQLiteDataReader dr = cmd.ExecuteReader())
-                {
-                    while (dr.Read())
-                    {
-                        oLista.Add(new ActionModel()
-                        {
-                            Customerid = dr["Customerid"].ToString(),
-                            Productid = dr["Productid"].ToString(),
-                            Product = dr["Product"].ToString(),
-                            CardN = dr["CardN"].ToString(),
-                        });
-
-                    }
-                }
-            }
-            return oLista;
         }
     }
 }
