@@ -5,7 +5,7 @@ Solo Project
 Name: Javier Agudo
 WSU ID: V658J563
 
-GithubID:
-GithubName:
-Link to project Repo:
-Link for Project Demo Video:
+Github URL: https://github.com/Sasoruma
+GithubName: Sasoruma
+Link to project Repo: https://github.com/Sasoruma/Project665
+Link for Project Demo Video: https://youtu.be/tE50PSoVtiU
