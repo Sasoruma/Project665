@@ -9,7 +9,7 @@ CREATE TABLE "ActionModel" (
 
 //Create Book Table
 CREATE TABLE "Book" (
-	"Productid"	INTEGER NOT NULL UNIQUE,
+	"Productid"	TEXT NOT NULL UNIQUE,
 	"ISBN"	TEXT NOT NULL UNIQUE,
 	"Title"	TEXT NOT NULL,
 	"Author"	TEXT,
@@ -19,7 +19,7 @@ CREATE TABLE "Book" (
 
 //Create Video Table
 CREATE TABLE "Video" (
-	"Productid"	INTEGER NOT NULL UNIQUE,
+	"Productid"	TEXT NOT NULL UNIQUE,
 	"Title"	TEXT NOT NULL,
 	"StarName"	TEXT,
 	"Year"	INTEGER,
@@ -28,7 +28,7 @@ CREATE TABLE "Video" (
 
 //Create Customer Table
 CREATE TABLE "Customer" (
-	"Customerid"	INTEGER NOT NULL UNIQUE,
+	"Customerid"	TEXT NOT NULL UNIQUE,
 	"FirstName"	TEXT NOT NULL,
 	"LastName"	TEXT NOT NULL,
 	"Phone"	INTEGER NOT NULL,
